@@ -26,12 +26,24 @@ const Cadastro = () => {
         
         // Injeção de dados na State
         console.log(prevState),
-        ({...prevState, [input]:text})
+        ({...prevState, [input]:text}) 
         
       ));
     }
 
-    // Validação dos dados de cadastro
+    // ------ Validação dos dados de cadastro ------ //
+
+    // State de erro de preenchimento 
+
+    const [errors, setErrors] = React.useState({});
+
+    // Função Handler que configura as mensagens de erro na State
+
+    const handlerErrors = (errorMessage, input) => {
+
+      setErrors((prevState) => ({...prevState, [input]:errorMessage}));
+
+    }
 
     const validate = () => {
 
@@ -39,18 +51,22 @@ const Cadastro = () => {
 
       if(!inputs.titulo) {
         validate = false;
-        console.log('TITULO EM BRANCO');
+        handlerErrors('Informe o título do livro!', 'titulo');
+        // console.log('TITULO EM BRANCO');
       }
 
       if(!inputs.descricao) {
         validate = false;
-        console.log('DESCRICAO EM BRANCO');
+        handlerErrors('Informe o descrição do livro!', 'descricao');
+        // console.log('DESCRICAO EM BRANCO');
       }
 
       if(!inputs.capa) {
         validate = false;
-        console.log('CAPA EM BRANCO');
+        handlerErrors('Insira a capa do livro!', 'capa');
+        // console.log('CAPA EM BRANCO');
       }
+
 
     }
   
@@ -65,14 +81,20 @@ const Cadastro = () => {
 
             <Input 
               label="Título"
+              error={errors.titulo}
+              onFocus={() => {handlerErrors(null, 'titulo')}}
               onChangeText={(text) => handlerOnChange(text, 'titulo')}
             />
             <Input 
               label="Descrição"
+              error={errors.descricao}
+              onFocus={() => {handlerErrors(null, 'descricao')}}
               onChangeText={(text) => handlerOnChange(text, 'descricao')}
             />
             <Input 
               label="Capa" 
+              error={errors.capa}
+              onFocus={() => {handlerErrors(null, 'capa')}}
               onChangeText={(text) => handlerOnChange(text, 'capa')}
             />
 

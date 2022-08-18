@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import COLORS from '../const/Colors';
 
-const Input = ({label, ...props}) => {
+const Input = ({label, error, onFocus=()=>{}, ...props}) => {
 
     return(
 
@@ -10,13 +10,16 @@ const Input = ({label, ...props}) => {
 
             <Text style={estilos.inputLabel}>{label}</Text>
 
-            <View style={estilos.inputContainer}>
+            <View style={[estilos.inputContainer, {borderColor: error ? COLORS.red : COLORS.darkBlue}]}>
                 <TextInput 
                 style={estilos.textInput} 
                 autoCorrect={false}
                 {...props}
+                onFocus={() => {onFocus()}}
                 />
             </View>
+
+            <Text>{error}</Text>
 
         </View>
 
