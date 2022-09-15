@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 
 import Login from "./src/telas/Login";
 import Cadastro from "./src/telas/Cadastro";
+import { Listagem } from "./src/telas/Listagem";
 
 const App = () => {
 
@@ -14,7 +15,8 @@ const App = () => {
     //   <Text style={estilo.titulo}>{nome}</Text>
     // </View>
     // <Login />             
-    <Cadastro />   
+    // <Cadastro />   
+    <Listagem/>
     
   );
 

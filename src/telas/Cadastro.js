@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 
 import Input from "../componentes/Input";
 import Button from "../componentes/Button";
-
+import { apiLivraria } from "../service/apiLivraria";
 import COLORS from "../const/Colors";
 
 const Cadastro = () => {
@@ -52,24 +52,41 @@ const Cadastro = () => {
       if(!inputs.titulo) {
         validate = false;
         handlerErrors('Informe o título do livro!', 'titulo');
-        // console.log('TITULO EM BRANCO');
       }
 
       if(!inputs.descricao) {
         validate = false;
         handlerErrors('Informe o descrição do livro!', 'descricao');
-        // console.log('DESCRICAO EM BRANCO');
       }
 
       if(!inputs.capa) {
         validate = false;
         handlerErrors('Insira a capa do livro!', 'capa');
-        // console.log('CAPA EM BRANCO');
+      }
+
+      if(validate){
+        cadastrar()
+        console.log('cadastrouououou')
       }
 
 
     }
-  
+
+    const cadastrar = () => {
+      try{
+
+        const response = apiLivraria.post('/cadastrarLivros', 
+        {
+          titulo: inputs.titulo,
+          descricao: inputs.descricao,
+          imagem: inputs.capa
+        })
+
+      } catch (error) {
+
+      }
+    }
+
     return (
 
       <SafeAreaView style={estilos.safe}>
@@ -81,18 +98,21 @@ const Cadastro = () => {
 
             <Input 
               label="Título"
+              iconName="book-outline"
               error={errors.titulo}
               onFocus={() => {handlerErrors(null, 'titulo')}}
               onChangeText={(text) => handlerOnChange(text, 'titulo')}
             />
             <Input 
               label="Descrição"
+              iconName="card-text-outline"
               error={errors.descricao}
               onFocus={() => {handlerErrors(null, 'descricao')}}
               onChangeText={(text) => handlerOnChange(text, 'descricao')}
             />
             <Input 
               label="Capa" 
+              iconName="image-outline"
               error={errors.capa}
               onFocus={() => {handlerErrors(null, 'capa')}}
               onChangeText={(text) => handlerOnChange(text, 'capa')}
