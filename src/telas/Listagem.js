@@ -1,39 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, TouchableOpacity } from "react-native";
 
-import { apiLivraria } from "../service/apiLivraria";
+import apiLivraria from "../service/apiLivraria";
 import capaLivro150 from "../assets/livros/lor150.png"
 import COLORS from "../const/Colors";
 
-export const Listagem = () => {
+const Listagem = ({ navigation }) => {
 
-    const [ livros, setLivros ] = useState([]);
+    const [livros, setLivros] = useState([]);
 
-    useEffect(
-        () => {
+    useEffect(() => {
 
-            apiLivraria.get('/listarLivros')
-            .then(
-                (data) => {
-                    console.log(data);
-                }
-            )
+        apiLivraria.get('/listarLivros')
 
-        },
-        []
-    );
+            .then((data) => {
+                setLivros(data.data);
+            })
+
+    }, []);
 
     return (
 
         <ScrollView>
             <View style={estilos.container}>
-                <View style={estilos.post}>
-                    <Image
-                        style={estilos.imagem}
-                        source={capaLivro150}
-                    />
-                    <Text style={estilos.titulo}>O Senhor dos anéis</Text>
-                </View>
+
+                {
+                    livros.map(item => (
+                        <TouchableOpacity
+                            key={item.codLivro}
+                            style={estilos.post}
+                            onPress={() => navigation.navigate('Detalhes', { codLivro: item.codLivro })}
+                        >
+
+                            <View>
+                                <Image
+                                    style={estilos.imagem}
+                                    source={capaLivro150}
+                                />
+                                <Text style={estilos.titulo}>{item.titulo}</Text>
+                            </View>
+
+                        </TouchableOpacity>
+                    ))
+                }
+
             </View>
         </ScrollView>
 
@@ -65,3 +75,5 @@ const estilos = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+
+export default Listagem;

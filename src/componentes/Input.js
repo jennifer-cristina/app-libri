@@ -4,7 +4,7 @@ import  Icon  from "react-native-vector-icons/MaterialCommunityIcons";
 
 import COLORS from '../const/Colors';
 
-const Input = ({label, error, iconName, onFocus=()=>{}, ...props}) => {
+const Input = ({ value, label, error, iconName, onFocus=()=>{}, ...props}) => {
 
     return(
 
@@ -13,13 +13,17 @@ const Input = ({label, error, iconName, onFocus=()=>{}, ...props}) => {
             <Text style={estilos.inputLabel}>{label}</Text>
 
             <View style={[estilos.inputContainer, {borderColor: error ? COLORS.red : COLORS.darkBlue}]}>
+
                 <Icon name={iconName} style={estilos.icon}/>
+
                 <TextInput 
                 style={estilos.textInput} 
                 autoCorrect={false}
+                value={value}
                 {...props}
                 onFocus={() => {onFocus()}}
                 />
+
             </View>
 
             <Text>{error}</Text>

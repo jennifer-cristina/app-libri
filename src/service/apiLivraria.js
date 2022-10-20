@@ -1,5 +1,7 @@
 import axios from 'axios';
 
-export const apiLivraria = axios.create({
-    baseURL: 'http://10.107.144.15:3000'
+const apiLivraria = axios.create({
+    baseURL: 'http://10.107.144.17:3000'
 });
+
+export default apiLivraria;
